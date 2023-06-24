@@ -56,12 +56,18 @@ const drawFood = () => {
 }
 
 const getFood = () => {
-    // todo: check if food is not spawned in snake's body
-
-    return {
+    const newFood = {
         x: getRandom(squareSize, height),
         y: getRandom(squareSize, width)
-    };
+    }
+
+    snake.forEach(s => {
+        if (s.x === newFood.x && s.y === newFood.y) {
+            return getFood();
+        }
+    })
+
+    return newFood;
 }
 
 const drawSquare = (style, {x, y}) => {
@@ -75,20 +81,8 @@ const getRandom = (num = 1, limit) => {
 }
 
 const checkEndGame = (game) => {
-    if (snake[0].x > (cols - 1) * squareSize && direction === "right") {
+    if (snake[0].x > (cols - 1) * squareSize || snake[0].y > (rows -1) * squareSize || snake[0].x < 0 || snake[0].y < 0 ) {
         return endGame(game);
-    }
-
-    if (snake[0].x < 0 && direction === "left") {
-        return endGame(game)
-    }
-
-    if (snake[0].y > (rows - 1) * squareSize && direction === "down") {
-        return endGame(game)
-    }
-
-    if (snake[0].y < 0 && direction === "up") {
-        return endGame(game)
     }
 
     snake.slice(1).forEach((square) => {

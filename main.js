@@ -1,4 +1,3 @@
-import './style.css'
 import {initGame} from "./snake.js";
 
 const playButton = document.getElementById('play');
